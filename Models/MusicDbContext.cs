@@ -8,6 +8,11 @@ namespace kolokwium.Models
 {
     public class MusicDbContext : DbContext
     {
+        public DbSet<Musician> Musicians { get; set; }
+        public DbSet<Musician_Track> Musician_Tracks { get; set; }
+        public DbSet<Track> Tracks { get; set; }
+        public DbSet<Album> Albums  { get; set; }
+        public DbSet<MusicLabel> MusicLabels { get; set; }
         public MusicDbContext(DbContextOptions options) : base(options) {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
