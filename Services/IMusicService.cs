@@ -9,5 +9,8 @@ namespace kolokwium.Services
     {
         public Task<List<Models.DTOs.Musician>> GetMusician(int id);
         public Task<bool> IsMusicianExists(int id);
+        public Task DeleteMusician(int id);
+        public Task SaveDatabase();
+        public Task<bool> IsMusicianHasTracks(int id);
     }
 }

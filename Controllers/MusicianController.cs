@@ -18,11 +18,26 @@ namespace kolokwium.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMusician(int id) {
+        public async Task<IActionResult> GetMusician(int id) 
+        {
             if(_service.IsMusicianExists(id).Result)
                 return Ok(await _service.GetMusician(id));
             else
                 return NotFound();
         } 
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMusician(int id) 
+        {
+            if(!_service.IsMusicianExists(id).Result) {
+                return NotFound();
+            }
+
+            if(_service.IsMusicianHasTracks(id).Result) {
+                return BadRequest("Musician has tracks");
+            }
+            await _service.DeleteMusician(id);
+            return Ok();
+        }
     }
 }

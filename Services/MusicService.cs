@@ -14,6 +14,18 @@ namespace kolokwium.Services
         {
             _context = context;
         }
+
+        public async Task DeleteMusician(int id)
+        {
+            var musician = new Musician {
+                IdMusician = id
+            };
+
+            var entry = _context.Entry(musician);
+            entry.State  = EntityState.Deleted;
+            await SaveDatabase();
+        }
+
         public async Task<List<Models.DTOs.Musician>> GetMusician(int id)
         {
             return await _context.Musicians.Where(e => e.IdMusician == id).Select(e => new Models.DTOs.Musician {
@@ -34,6 +46,16 @@ namespace kolokwium.Services
         public async Task<bool> IsMusicianExists(int id)
         {
             return await _context.Musicians.AnyAsync(e => e.IdMusician == id);
+        }
+
+        public Task<bool> IsMusicianHasTracks(int id)
+        {
+            return _context.Musician_Tracks.AnyAsync(e => e.IdMusician == id);
+        }
+
+        public Task SaveDatabase()
+        {
+            return _context.SaveChangesAsync();
         }
     }
 }
