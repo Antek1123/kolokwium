@@ -26,9 +26,9 @@ namespace kolokwium.Services
             await SaveDatabase();
         }
 
-        public async Task<List<Models.DTOs.Musician>> GetMusician(int id)
+        public Task<List<Models.DTOs.Musician>> GetMusician(int id)
         {
-            return await _context.Musicians.Where(e => e.IdMusician == id).Select(e => new Models.DTOs.Musician {
+            return _context.Musicians.Where(e => e.IdMusician == id).Select(e => new Models.DTOs.Musician {
                 FirstName = e.FirstName,
                 LastName = e.LastName,
                 Nickname = e.Nickname,
@@ -43,9 +43,9 @@ namespace kolokwium.Services
             }).ToListAsync();
         }
 
-        public async Task<bool> IsMusicianExists(int id)
+        public Task<bool> IsMusicianExists(int id)
         {
-            return await _context.Musicians.AnyAsync(e => e.IdMusician == id);
+            return _context.Musicians.AnyAsync(e => e.IdMusician == id);
         }
 
         public Task<bool> IsMusicianHasTracks(int id)
